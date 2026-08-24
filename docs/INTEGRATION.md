@@ -70,3 +70,4 @@ Use:
 
 when no callback is required.
 Callbacks use `on="finalized"` because downstream contracts may make irreversible decisions based on event ordering. Polling consumers should require `can_import(...) == true` and must not treat diagnostic fields as authorization.
+Pass evidence URIs as a native list in CLI/API calls. The contract retains compatibility with the earlier JSON-string form, but the list form is preferred because it avoids nested JSON encoding.

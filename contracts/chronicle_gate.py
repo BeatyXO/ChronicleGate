@@ -78,7 +78,7 @@ class ChronicleGate(gl.Contract):
         title: str,
         subject: str,
         occurrence_definition: str,
-        evidence_uris_json: str,
+        evidence_uris_json: list,
     ) -> u256:
         if len(title) == 0 or len(title) > MAX_TITLE:
             raise gl.vm.UserError("EXPECTED: invalid event title")
@@ -373,11 +373,14 @@ class ChronicleGate(gl.Contract):
             "reason": reason,
         }
 
-    def _parse_evidence_uris(self, evidence_uris_json: str) -> list:
-        try:
-            values = json.loads(evidence_uris_json)
-        except Exception:
-            raise gl.vm.UserError("EXPECTED: evidence_uris_json must be a JSON array")
+    def _parse_evidence_uris(self, evidence_uris_json: list) -> list:
+        if isinstance(evidence_uris_json, list):
+            values = evidence_uris_json
+        else:
+            try:
+                values = json.loads(str(evidence_uris_json))
+            except Exception:
+                raise gl.vm.UserError("EXPECTED: evidence_uris_json must be a JSON array")
 
         if not isinstance(values, list):
             raise gl.vm.UserError("EXPECTED: evidence_uris_json must be a JSON array")

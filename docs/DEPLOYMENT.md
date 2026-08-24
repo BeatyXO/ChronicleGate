@@ -4,6 +4,8 @@
 
 No canonical Studionet deployment is recorded for this checkout. `CHRONICLE_GATE_ADDRESS` is not committed and the integration test is opt-in, so this repository does not claim a live address, transaction hash, finality, or runtime smoke-test result.
 
+The earlier deployment is historical because the contract source subsequently changed to accept CLI-native URI arrays. A fresh deployment is required before current-source runtime evidence can be claimed.
+
 ## Reproducible deployment checklist
 
 Deploy the exact `contracts/chronicle_gate.py` from the commit being submitted with the official GenLayer Studio/CLI tooling. Record the public contract address, deployment transaction, receipt lifecycle, consensus result, and the source commit here. Do not commit credentials.
