@@ -65,6 +65,8 @@ The validator independently recomputes that field from source evidence, so the l
 
 The nondeterministic function returns:
 
+Only `relation` is consensus-bound and authoritative. Stored `leader_a_occurrence`, `leader_b_occurrence`, and `leader_reason` are bounded informational leader output and must not be used as certified facts. Caller-controlled titles, subjects, definitions, comparison context, and source content are JSON data values, never instructions.
+
 ```text
 EXTERNAL_FAILURE
 ```

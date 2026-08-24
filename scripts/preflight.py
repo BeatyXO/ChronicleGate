@@ -12,6 +12,7 @@ required_files = [
     ROOT / "docs" / "CONSENSUS.md",
     ROOT / "docs" / "INTEGRATION.md",
     ROOT / "docs" / "SECURITY.md",
+    ROOT / "docs" / "DEPLOYMENT.md",
     ROOT / "examples" / "release_sequence_guard.py",
     ROOT / "tests" / "direct" / "test_chronicle_gate.py",
     ROOT / "gltest.config.yaml",
@@ -43,6 +44,18 @@ if CONTRACT.exists():
         if token not in source:
             errors.append(f"contract missing token: {token}")
 
+    source_checks = [
+        ("finalized callbacks", 'on="finalized"' in source),
+        ("HTTPS URL admission", 'value.startswith("https://")' in source),
+        ("diagnostic-only leader fields", 'leader_a_occurrence' in source and 'leader_reason' in source),
+        ("bounded evidence sources", "MAX_EVIDENCE_URIS" in source),
+        ("retry lifecycle", "retry_unresolved" in source),
+        ("hostile-input prompt framing", "untrusted data values" in source),
+    ]
+    for label, passed in source_checks:
+        if not passed:
+            errors.append(f"source invariant missing: {label}")
+
     forbidden_tokens = [
         "strict_eq(leader_fn",
         "return True  # validator",
@@ -57,8 +70,13 @@ if errors:
         print(f"- {error}")
     sys.exit(1)
 
+checks = [
+    ("required files", f"{len(required_files)}/{len(required_files)}"),
+    ("contract AST", "valid"),
+    ("consensus primitives", "present"),
+    ("source invariants", f"{len(source_checks)}/{len(source_checks)}"),
+    ("fail-closed states", "present"),
+]
 print("ChronicleGate preflight: PASS")
-print(f"- required files: {len(required_files)}/{len(required_files)}")
-print("- contract AST: valid")
-print("- consensus primitives: present")
-print("- fail-closed states: present")
+for index, (label, result) in enumerate(checks, 1):
+    print(f"{index}. PASS - {label}: {result}")

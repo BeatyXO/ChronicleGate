@@ -69,3 +69,4 @@ Use:
 ```
 
 when no callback is required.
+Callbacks use `on="finalized"` because downstream contracts may make irreversible decisions based on event ordering. Polling consumers should require `can_import(...) == true` and must not treat diagnostic fields as authorization.

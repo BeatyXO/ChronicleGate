@@ -12,7 +12,7 @@ There is **no frontend** in this repository. ChronicleGate is intended to be imp
 
 ## Verification status
 
-This checkout has no canonical Studionet deployment yet. The verified local gates are Direct Mode 17/17, preflight PASS, and `genvm-linter 0.10.0` lint + validation PASS. Live address, transaction, finality, and runtime claims are intentionally omitted until a deployment is actually performed.
+This checkout has no canonical Studionet deployment yet. The verified local gates are Direct Mode 28/28, preflight PASS, and `genvm-linter 0.11.0` lint PASS. Live address, transaction, finality, and runtime claims are intentionally omitted until a deployment is actually performed.
 
 Traditional smart contracts can compare two timestamps only after somebody has already decided what those timestamps mean.
 
@@ -52,7 +52,7 @@ ChronicleGate uses GenLayer for the part deterministic code cannot safely do: in
 4. The validator compares the stable **relation enum** with the leader's relation.
 5. State is updated only from the consensus-accepted result.
 
-The explanation and timestamp precision are deliberately excluded from equality because independent validators can phrase the same conclusion differently. The on-chain consequence depends on the stable semantic relationship.
+The explanation and timestamp precision are deliberately excluded from equality because independent validators can phrase the same conclusion differently. Only the consensus-bound `relation` is authoritative and importable; `leader_*` fields are informational diagnostics, not certified facts.
 
 This is not a format-only validator and not a thin LLM wrapper: validators reproduce the evidence-reading and classification work themselves.
 
@@ -87,9 +87,9 @@ Relation
 ├── callback
 ├── status
 ├── relation
-├── a_occurrence
-├── b_occurrence
-├── reason
+├── leader_a_occurrence (diagnostic)
+├── leader_b_occurrence (diagnostic)
+├── leader_reason (diagnostic)
 ├── opened_by
 ├── created_at
 ├── resolved_at
@@ -207,7 +207,19 @@ ChronicleGate deliberately avoids manufacturing certainty.
 - `ORDER_NOT_PROVABLE` cannot be imported as a successful order.
 - `EXTERNAL_FAILURE` cannot be imported as a successful order.
 - Resolved relations cannot be replayed or retried.
-- Evidence content is explicitly treated as untrusted data to reduce prompt-injection risk.
+- Evidence content and caller-controlled semantic fields are explicitly treated as untrusted data to reduce prompt-injection risk.
+- Consumer callbacks use finalized delivery semantics.
+
+## Protocol invariants
+
+1. Event definitions and source sets are immutable after registration.
+2. Relations reference two distinct immutable events.
+3. Only a consensus-bound terminal relation can return `can_import == true`.
+4. `ORDER_NOT_PROVABLE` and `EXTERNAL_FAILURE` never authorize consumers.
+5. Resolved relations cannot be replayed; retry is limited to unresolved relations.
+6. Caller-submitted timestamps never directly settle ordering.
+7. Stored `leader_*` fields are diagnostics; only `relation` is authoritative.
+8. Consumer callbacks use finalized delivery semantics.
 
 ## Repository structure
 

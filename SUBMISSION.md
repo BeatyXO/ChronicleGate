@@ -37,7 +37,7 @@ Not recorded in this repository until a real deployment has been performed and v
 - Repository: https://github.com/BeatyXO/ChronicleGate
 - Canonical Studionet address: not yet deployed in this checkout
 - Deployment transaction/source parity/live runtime proof: not claimed
-- Local evidence: preflight PASS; Direct Mode 17/17; `genvm-linter 0.10.0` lint and validation PASS
+- Local evidence: preflight PASS; Direct Mode 28/28; `genvm-linter 0.11.0` lint PASS. Full SDK validation was attempted but did not complete in this environment, so it is not claimed as passed.
 
 ChronicleGate uses GenLayer consensus because validators must independently inspect public evidence and apply natural-language occurrence definitions. The leader proposes a bounded relation enum and each validator independently re-fetches and classifies the evidence; disagreement prevents a trusted terminal ordering. Deterministic code owns bounds, parsing, state transitions, retry/replay protection, import gating, and persistence.
 

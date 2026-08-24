@@ -19,6 +19,6 @@ The canonical deployment must be kept separate from disposable integration deplo
 ## Local evidence
 
 - Preflight: PASS (required files, AST, consensus primitives, and fail-closed states).
-- Direct Mode: 17 passed.
-- GenVM linter: `genvm-linter 0.10.0`; lint and validation passed. The validator emitted only an informational newer-runner warning.
+- Direct Mode: 28 passed (28 collected).
+- GenVM linter: `genvm-linter 0.11.0`; lint passed. The full `check` command was attempted; SDK validation did not complete in this environment and is not claimed as passed.
 - Studionet: not run; no address was configured.

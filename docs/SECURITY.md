@@ -62,3 +62,10 @@ Its security goal is narrower: multiple validators should independently converge
 - Semantic adjudication can remain inconclusive when evidence is weak.
 - Callback delivery is best-effort.
 - The contract does not authenticate the publisher behind a URL; consumers should choose evidence sources appropriate to their risk model.
+## Callback finality and diagnostics
+
+Callbacks use finalized delivery semantics. Only the consensus-bound `relation` is authoritative; `leader_a_occurrence`, `leader_b_occurrence`, and `leader_reason` are bounded informational diagnostics and must not be used as certified timestamps or settlement inputs.
+
+## Limitations
+
+Mutable web sources can change after resolution; validators may fail to converge; weak or conflicting evidence becomes inconclusive; publisher identity is not authenticated by ChronicleGate; consumers must choose appropriate sources; StudioNet behavior is not production-network assurance; and semantic judgments depend on validator/model quality.
