@@ -30,3 +30,17 @@ ChronicleGate is a reusable semantic event-ordering primitive that lets GenLayer
 ## Live deployment
 
 Not recorded in this repository until a real deployment has been performed and verified. Do not replace this section with a fabricated address.
+## Submission status
+
+- Category: standalone Intelligent Contract
+- Primitive: ChronicleGate — consensus-based semantic event ordering
+- Repository: https://github.com/BeatyXO/ChronicleGate
+- Canonical Studionet address: not yet deployed in this checkout
+- Deployment transaction/source parity/live runtime proof: not claimed
+- Local evidence: preflight PASS; Direct Mode 17/17; `genvm-linter 0.10.0` lint and validation PASS
+
+ChronicleGate uses GenLayer consensus because validators must independently inspect public evidence and apply natural-language occurrence definitions. The leader proposes a bounded relation enum and each validator independently re-fetches and classifies the evidence; disagreement prevents a trusted terminal ordering. Deterministic code owns bounds, parsing, state transitions, retry/replay protection, import gating, and persistence.
+
+The primitive is reusable through `register_event`, `open_relation`, `resolve_relation`, `retry_unresolved`, and the stable `can_import` view. It fails closed to retryable `ORDER_NOT_PROVABLE` or `EXTERNAL_FAILURE` when ordering cannot safely be established. Limitations include dependence on public source availability, model interpretation, and the usual malicious-validator-majority assumption.
+
+See `docs/CONSENSUS.md`, `docs/SECURITY.md`, `docs/INTEGRATION.md`, and `docs/DEPLOYMENT.md` for the reviewer fast path.

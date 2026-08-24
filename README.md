@@ -10,6 +10,10 @@ There is **no frontend** in this repository. ChronicleGate is intended to be imp
 
 ## Why this primitive exists
 
+## Verification status
+
+This checkout has no canonical Studionet deployment yet. The verified local gates are Direct Mode 17/17, preflight PASS, and `genvm-linter 0.10.0` lint + validation PASS. Live address, transaction, finality, and runtime claims are intentionally omitted until a deployment is actually performed.
+
 Traditional smart contracts can compare two timestamps only after somebody has already decided what those timestamps mean.
 
 Real evidence is messier:
@@ -223,6 +227,7 @@ ChronicleGate/
 │   ├── ARCHITECTURE.md
 │   ├── CONSENSUS.md
 │   ├── INTEGRATION.md
+│   ├── DEPLOYMENT.md
 │   └── SECURITY.md
 ├── scripts/
 │   └── preflight.py
