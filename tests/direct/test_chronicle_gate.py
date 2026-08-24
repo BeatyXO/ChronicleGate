@@ -73,6 +73,18 @@ def test_register_event_stores_definition_and_sources(direct_deploy, direct_vm, 
     assert event["evidence_uris"] == [A_URL]
 
 
+def test_register_event_accepts_native_evidence_uri_list(direct_deploy, direct_vm, direct_alice):
+    contract = deploy(direct_deploy, direct_vm)
+    direct_vm.sender = direct_alice
+    event_id = contract.register_event(
+        "Native list",
+        "CLI compatibility",
+        "The event occurs when the native URI list is accepted.",
+        [A_URL, A_URL],
+    )
+    assert json.loads(contract.event_of(event_id))["evidence_uris"] == [A_URL]
+
+
 @pytest.mark.parametrize(
     "evidence",
     [
