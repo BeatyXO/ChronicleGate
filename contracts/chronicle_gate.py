@@ -78,7 +78,7 @@ class ChronicleGate(gl.Contract):
         title: str,
         subject: str,
         occurrence_definition: str,
-        evidence_uris_json: list,
+        evidence_uris: list,
     ) -> u256:
         if len(title) == 0 or len(title) > MAX_TITLE:
             raise gl.vm.UserError("EXPECTED: invalid event title")
@@ -87,7 +87,7 @@ class ChronicleGate(gl.Contract):
         if len(occurrence_definition) == 0 or len(occurrence_definition) > MAX_DEFINITION:
             raise gl.vm.UserError("EXPECTED: invalid occurrence definition")
 
-        evidence_uris = self._parse_evidence_uris(evidence_uris_json)
+        evidence_uris = self._parse_evidence_uris(evidence_uris)
 
         event_id = self.next_event_id
         self.next_event_id = event_id + u256(1)
@@ -373,17 +373,17 @@ class ChronicleGate(gl.Contract):
             "reason": reason,
         }
 
-    def _parse_evidence_uris(self, evidence_uris_json: list) -> list:
-        if isinstance(evidence_uris_json, list):
-            values = evidence_uris_json
+    def _parse_evidence_uris(self, evidence_uris: list) -> list:
+        if isinstance(evidence_uris, list):
+            values = evidence_uris
         else:
             try:
-                values = json.loads(str(evidence_uris_json))
+                values = json.loads(str(evidence_uris))
             except Exception:
-                raise gl.vm.UserError("EXPECTED: evidence_uris_json must be a JSON array")
+                raise gl.vm.UserError("EXPECTED: evidence_uris must be a JSON array")
 
         if not isinstance(values, list):
-            raise gl.vm.UserError("EXPECTED: evidence_uris_json must be a JSON array")
+            raise gl.vm.UserError("EXPECTED: evidence_uris must be a JSON array")
         if len(values) == 0 or len(values) > MAX_EVIDENCE_URIS:
             raise gl.vm.UserError("EXPECTED: between 1 and 4 evidence URIs")
 

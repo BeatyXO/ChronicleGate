@@ -107,11 +107,11 @@ register_event(
     title: str,
     subject: str,
     occurrence_definition: str,
-    evidence_uris_json: list[str],
+    evidence_uris: list[str],
 ) -> u256
 ```
 
-`evidence_uris_json` is a CLI-native list containing 1-4 HTTPS URLs. For backward compatibility, the contract also accepts the former JSON-string representation.
+`evidence_uris` is a CLI-native list containing 1-4 HTTPS URLs. For backward compatibility, the contract also accepts the former JSON-string representation.
 
 Example:
 
